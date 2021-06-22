@@ -1,0 +1,34 @@
+pragma solidity ^ 0.8.1;
+
+contract PatientAuth_SC{
+address payable owner;
+bytes32 key;
+bytes32 hashid;
+bytes32 hash;
+
+
+mapping (bytes32=>bytes32) hashmapping;
+
+    constructor() public { //to set the deployer of the contract as owner 
+        owner=msg.sender;
+    }
+
+    function uploadpublickey(bytes32 _key) external{
+   
+       require (msg.sender==owner,"You can not upload the key");
+        key=_key;
+    }
+
+    function reterivepublickey() external view returns(bytes32){ // 
+        return(key);
+    }
+
+    function upload_hash(bytes32 _hashid, bytes32 _hash) external {  // 
+        require (msg.sender==owner,"You can not upload the hash_key");
+          hashmapping[_hashid]=_hash;
+    }
+    
+    function reterive_hash(bytes32 _hashid) external view returns(bytes32){ // 
+        return(hashmapping[_hashid]);
+    }
+}
